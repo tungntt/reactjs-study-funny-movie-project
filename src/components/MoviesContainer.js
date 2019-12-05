@@ -11,7 +11,7 @@ export default class MoviesContainer extends Component {
     }
 
     componentDidMount() {
-        const url = 'https://funnymovie-remi.herokuapp.com/api/movie?fbclid=IwAR3wwt0wdRvfGg7dFvBBzxkjcb7U5hMn_UEw6t97jA6Ou4_lakjkZ-7-pJc';
+        const url = 'https://funnymovie-remi.herokuapp.com/api/movie';
         axios.get(url)
             .then( response => {
                 this.setState({
