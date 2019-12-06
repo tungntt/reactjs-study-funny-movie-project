@@ -1,37 +1,29 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import MoviesList from './MoviesList'
+import React, { Component } from 'react';
+import MoviesList from './MoviesList';
+import Header from './Header';
+import Share from './Share';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class MoviesContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            moviesInfomation: []
-        };
-    }
-
-    componentDidMount() {
-        const url = 'https://funnymovie-remi.herokuapp.com/api/movie';
-        axios.get(url)
-            .then( response => {
-                this.setState({
-                    moviesInfomation: response.data
-                });
-            });
-    }
-
     render() {
-        console.log(this.state.moviesInfomation[0]);
         return (
-            <div>
-                {
-                    this.state.moviesInfomation.map((item, index) => (
-                        <MoviesList 
-                            key={index}
-                            movies={item} />
-                    ))
-                }
-            </div>
+            <Router>
+                <div>
+                    <Header />
+                    <Switch>
+                        {/* <Route path="/">
+                            <MoviesList />
+                        </Route>
+                        <Route exact path="/share">
+                            <Share />
+                        </Route> */}
+                    <Route path="/" exact component={MoviesList} />
+                    <Route path="/share" component={Share} />
+                    </Switch>
+                </div>
+            </Router>
         )
     }
 }
