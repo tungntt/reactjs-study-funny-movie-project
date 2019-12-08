@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { InputGroup, Button, Input } from 'reactstrap';
 import classNames from 'classnames';
 import '../App.css';
+import axios from 'axios';
 
 class Share extends Component {
     constructor(props) {
@@ -32,21 +33,46 @@ class Share extends Component {
     handleChange(e) {
         let input = e.target.value;
         let checkURL = this.checkReg(input);
-        if(checkURL || input === "") {
+        if(input === "") {
             this.setState({
-                disabledButton: false,
+                disabledButton: true,
                 checkURL: false
             });
         } else {
-            this.setState({
-                disabledButton: true,
-                checkURL: true
-            });
+            if(checkURL) {
+                this.setState({
+                    disabledButton: false,
+                    checkURL: false,
+                    inputValue: input
+                });
+            } else {
+                this.setState({
+                    disabledButton: true,
+                    checkURL: true
+                });
+            }
         }
     }
 
-    handleClick() {
-        
+    handleClick(e) {
+        e.preventDefault();
+        const url = 'https://funnymovie-remi.herokuapp.com/api/movie';
+        const newUrl = {
+            title: null,
+            url: this.state.inputValue,
+            sharedBy: "admin@localhost",
+            description: null,
+            voteUp: 0,
+            voteDown: 0
+        }
+        console.log(newUrl);
+        axios.post('https://funnymovie-remi.herokuapp.com/api/movie', { newUrl })
+            .then(res => {
+                alert("Success");
+            })
+            .catch(err => {
+                alert(err);
+            }); 
     }
 
     clearInput = () => {
