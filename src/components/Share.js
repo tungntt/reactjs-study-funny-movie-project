@@ -11,7 +11,8 @@ class Share extends Component {
         this.state = {
             inputValue: "",
             disabledButton: true,
-            checkURL: false
+            checkURL: false,
+            isSubmited: false
         }
         
         this.handleChange = this.handleChange.bind(this);
@@ -68,7 +69,7 @@ class Share extends Component {
         }
         axios.post(url, reqBody)
             .then(res => {
-                return <Redirect to="/" />
+                this.setState({isSubmited: res});
             })
     }
 
@@ -84,6 +85,9 @@ class Share extends Component {
     render() {
         let btnDisable = this.state.disabledButton;
         let cUrl = this.state.checkURL;
+        if(this.state.isSubmited) {
+            return <Redirect to="/" />
+        }
         return (
             <div className="input-group">
                 <InputGroup>
