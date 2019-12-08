@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { InputGroup, Button, Input } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import classNames from 'classnames';
 import '../App.css';
 import axios from 'axios';
@@ -57,7 +58,7 @@ class Share extends Component {
     handleClick(e) {
         e.preventDefault();
         const url = 'https://funnymovie-remi.herokuapp.com/api/movie';
-        const newUrl = {
+        const reqBody = {
             title: null,
             url: this.state.inputValue,
             sharedBy: "admin@localhost",
@@ -65,14 +66,10 @@ class Share extends Component {
             voteUp: 0,
             voteDown: 0
         }
-        console.log(newUrl);
-        axios.post('https://funnymovie-remi.herokuapp.com/api/movie', { newUrl })
+        axios.post(url, reqBody)
             .then(res => {
-                alert("Success");
+                return <Redirect to="/" />
             })
-            .catch(err => {
-                alert(err);
-            }); 
     }
 
     clearInput = () => {
